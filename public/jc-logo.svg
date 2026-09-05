@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 104 72" role="img" aria-labelledby="title desc">
+  <title id="title">JC monogram</title>
+  <desc id="desc">Lowercase J and C monogram with a botanical star</desc>
+  <g fill="none" stroke="#242720" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="27" cy="13" r="4.5" fill="#242720" stroke="none"/>
+    <path d="M27 27v21c0 11-5 17-14 17-3 0-5-.5-7-1.5" stroke-width="7"/>
+    <path d="M81 34c-4-5-10-8-17-8-12 0-21 8-21 19s9 19 21 19c7 0 13-3 17-8" stroke-width="7"/>
+  </g>
+  <g fill="#759045" transform="translate(82 2)">
+    <path d="M10 0c1.4 6.6 3.4 8.6 10 10-6.6 1.4-8.6 3.4-10 10C8.6 13.4 6.6 11.4 0 10 6.6 8.6 8.6 6.6 10 0Z"/>
+    <circle cx="10" cy="10" r="2.2" fill="#f9f9f2"/>
+  </g>
+</svg>
