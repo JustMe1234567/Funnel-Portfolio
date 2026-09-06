@@ -394,6 +394,16 @@ html{scroll-behavior:smooth}body{margin:0}img,svg{vertical-align:middle}img{max-
 .work-image:hover .work-image-inner {
   transform: translateY(-7px);
 }
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+.work-card .work-image-inner {
+  animation: float 7s ease-in-out infinite;
+}
+.work-card:nth-child(2) .work-image-inner { animation-delay: -2.33s; }
+.work-card:nth-child(3) .work-image-inner { animation-delay: -4.66s; }
+.work-image:hover .work-image-inner { animation-play-state: paused; }
 .work-image img {
   object-fit: cover;
   object-position: top;
@@ -998,8 +1008,8 @@ html{scroll-behavior:smooth}body{margin:0}img,svg{vertical-align:middle}img{max-
 .f-nav nav a { display: inline-flex; align-items: center; min-height: 44px; }
 .main-preview { top: 70px; left: 7%; right: 7%; transform: rotate(-4deg); }
 .mini-preview { width: 48%; left: -2%; bottom: 65px; }
-.right-preview { width: 48%; right: -2%; bottom: 86px; transform: rotate(-5deg); z-index: 2; }
-.right-preview .preview-image { height: 151px; }
+.right-preview { width: 53%; right: -2%; bottom: 86px; transform: rotate(-5deg); z-index: 2; }
+.right-preview .preview-image { height: 165px; }
 .built-note { bottom: 19px; right: 20px; padding: 10px 14px; }
 .art-index { bottom: 30px; left: 20px; right: auto; font-size: 6px; }
 .browser-preview:focus-visible { z-index: 4; }
@@ -1075,7 +1085,7 @@ html{scroll-behavior:smooth}body{margin:0}img,svg{vertical-align:middle}img{max-
   .main-preview { top: 15%; left: 6%; right: 6%; }
   .main-preview .preview-image { height: auto; aspect-ratio: 1.65; }
   .mini-preview { width: 48%; left: 0; bottom: 19%; }
-  .right-preview { width: 48%; right: 0; bottom: 22%; }
+  .right-preview { width: 53%; right: 0; bottom: 22%; }
   .mini-preview .preview-image, .right-preview .preview-image { height: auto; aspect-ratio: 1.15; }
   .browser-bar { height: 23px; padding-inline: 7px; gap: 5px; font-size: 7px; }
   .browser-bar > span:first-child { letter-spacing: 0; white-space: nowrap; }
