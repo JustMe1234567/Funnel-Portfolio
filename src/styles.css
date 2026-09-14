@@ -5,6 +5,8 @@ html{scroll-behavior:smooth}body{margin:0}img,svg{vertical-align:middle}img{max-
   --muted: #676b60;
   --line: #dddfd4;
   --lime: #d5f478;
+  --header-height: 108px;
+  padding-top: var(--header-height);
   background: var(--paper);
   color: var(--ink);
   font-family: Arial, Helvetica, sans-serif;
@@ -43,13 +45,16 @@ html{scroll-behavior:smooth}body{margin:0}img,svg{vertical-align:middle}img{max-
   justify-content: space-between;
   border-bottom: 1px solid var(--line);
   gap: 20px;
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 50;
+  left: 0;
+  right: 0;
+  z-index: 1000;
   background: rgba(249, 249, 242, 0.94);
-  transition: height 260ms cubic-bezier(.2, .7, .2, 1), padding 260ms cubic-bezier(.2, .7, .2, 1), transform 300ms ease, background 180ms ease, box-shadow 180ms ease;
+  transition: height 260ms cubic-bezier(.2, .7, .2, 1), padding 260ms cubic-bezier(.2, .7, .2, 1), transform 280ms ease, background 180ms ease, box-shadow 180ms ease;
   backdrop-filter: blur(14px) saturate(125%);
   -webkit-backdrop-filter: blur(14px) saturate(125%);
+  will-change: transform;
 }
 .f-nav.is-compact {
   height: 76px;
@@ -1132,6 +1137,7 @@ html{scroll-behavior:smooth}body{margin:0}img,svg{vertical-align:middle}img{max-
   .contact-star { font-size: 40px; margin-left: 8px; }
 }
 @media (max-width: 900px) {
+  .funnel { --header-height: 137px; }
   .f-nav { flex-wrap: wrap; height: auto; padding-block: 20px 10px; gap: 12px; }
   .f-nav.is-compact { height: auto; padding-block: 8px 2px; gap: 4px 12px; }
   .f-nav.is-compact nav { padding-top: 0; gap: 28px; }

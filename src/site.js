@@ -45,49 +45,46 @@ const standaloneWhatsApp = document.querySelector('.contact-list > a[href^="http
 if (phoneContactLabel) phoneContactLabel.textContent = 'Phone / WhatsApp';
 if (standaloneWhatsApp) standaloneWhatsApp.remove();
 
-const stickyNavigation = document.querySelector('.f-nav');
+const header = document.querySelector('.f-nav');
 
-if (stickyNavigation) {
-  const activationPoint = 100;
-  const scrollDelta = 8;
+if (header) {
+  const hideAfter = 120;
+  const threshold = 12;
   let lastScrollY = window.scrollY;
+  let accumulatedDelta = 0;
   let ticking = false;
 
-  const showHeader = () => {
-    if (stickyNavigation.classList.contains('is-hidden')) {
-      stickyNavigation.classList.remove('is-hidden');
-    }
-  };
-
-  const hideHeader = () => {
-    if (!stickyNavigation.classList.contains('is-hidden')) {
-      stickyNavigation.classList.add('is-hidden');
-    }
-  };
-
   const updateHeader = () => {
-    const currentScrollY = window.scrollY;
+    const currentScrollY = Math.max(window.scrollY, 0);
+    const delta = currentScrollY - lastScrollY;
 
-    stickyNavigation.classList.toggle('is-compact', currentScrollY > 24);
+    header.classList.toggle('is-compact', currentScrollY > 24);
 
-    const diff = currentScrollY - lastScrollY;
-
-    if (Math.abs(diff) < scrollDelta) {
-      ticking = false;
-      return;
-    }
-
-    if (currentScrollY <= activationPoint) {
-      showHeader();
+    if (currentScrollY <= 10) {
+      header.classList.remove('is-hidden');
+      accumulatedDelta = 0;
       lastScrollY = currentScrollY;
       ticking = false;
       return;
     }
 
-    if (diff > 0) {
-      hideHeader();
-    } else {
-      showHeader();
+    if (
+      (delta > 0 && accumulatedDelta < 0) ||
+      (delta < 0 && accumulatedDelta > 0)
+    ) {
+      accumulatedDelta = 0;
+    }
+
+    accumulatedDelta += delta;
+
+    if (currentScrollY > hideAfter && accumulatedDelta > threshold) {
+      header.classList.add('is-hidden');
+      accumulatedDelta = 0;
+    }
+
+    if (accumulatedDelta < -threshold) {
+      header.classList.remove('is-hidden');
+      accumulatedDelta = 0;
     }
 
     lastScrollY = currentScrollY;
@@ -95,9 +92,10 @@ if (stickyNavigation) {
   };
 
   window.addEventListener('scroll', () => {
-    if (ticking) return;
-    ticking = true;
-    window.requestAnimationFrame(updateHeader);
+    if (!ticking) {
+      window.requestAnimationFrame(updateHeader);
+      ticking = true;
+    }
   }, { passive: true });
 }
 
