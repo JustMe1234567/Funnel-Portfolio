@@ -39,6 +39,42 @@ document.querySelectorAll('[data-copy]').forEach((button) => {
   });
 });
 
+const phoneContactLabel = document.querySelector('.contact-list a[href^="tel:"] small');
+const standaloneWhatsApp = document.querySelector('.contact-list > a[href^="https://wa.me/"]');
+
+if (phoneContactLabel) phoneContactLabel.textContent = 'Phone / WhatsApp';
+if (standaloneWhatsApp) standaloneWhatsApp.remove();
+
+const stickyNavigation = document.querySelector('.f-nav');
+
+if (stickyNavigation) {
+  let previousScrollPosition = window.scrollY;
+  let scrollUpdateQueued = false;
+
+  const updateNavigation = () => {
+    const currentScrollPosition = window.scrollY;
+    const scrollDelta = currentScrollPosition - previousScrollPosition;
+    const isNearPageTop = currentScrollPosition < 24;
+
+    stickyNavigation.classList.toggle('is-compact', !isNearPageTop);
+
+    if (isNearPageTop) {
+      stickyNavigation.classList.remove('is-hidden');
+    } else if (Math.abs(scrollDelta) > 6) {
+      stickyNavigation.classList.toggle('is-hidden', scrollDelta > 0 && currentScrollPosition > 96);
+    }
+
+    previousScrollPosition = currentScrollPosition;
+    scrollUpdateQueued = false;
+  };
+
+  window.addEventListener('scroll', () => {
+    if (scrollUpdateQueued) return;
+    scrollUpdateQueued = true;
+    window.requestAnimationFrame(updateNavigation);
+  }, { passive: true });
+}
+
 document.querySelectorAll('.faq-list details').forEach((details) => {
   const summary = details.querySelector('summary');
   const content = details.querySelector('.details-content');
