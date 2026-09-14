@@ -48,30 +48,56 @@ if (standaloneWhatsApp) standaloneWhatsApp.remove();
 const stickyNavigation = document.querySelector('.f-nav');
 
 if (stickyNavigation) {
-  let previousScrollPosition = window.scrollY;
-  let scrollUpdateQueued = false;
+  const activationPoint = 100;
+  const scrollDelta = 8;
+  let lastScrollY = window.scrollY;
+  let ticking = false;
 
-  const updateNavigation = () => {
-    const currentScrollPosition = window.scrollY;
-    const scrollDelta = currentScrollPosition - previousScrollPosition;
-    const isNearPageTop = currentScrollPosition < 24;
-
-    stickyNavigation.classList.toggle('is-compact', !isNearPageTop);
-
-    if (isNearPageTop) {
+  const showHeader = () => {
+    if (stickyNavigation.classList.contains('is-hidden')) {
       stickyNavigation.classList.remove('is-hidden');
-    } else if (Math.abs(scrollDelta) > 6) {
-      stickyNavigation.classList.toggle('is-hidden', scrollDelta > 0 && currentScrollPosition > 96);
+    }
+  };
+
+  const hideHeader = () => {
+    if (!stickyNavigation.classList.contains('is-hidden')) {
+      stickyNavigation.classList.add('is-hidden');
+    }
+  };
+
+  const updateHeader = () => {
+    const currentScrollY = window.scrollY;
+
+    stickyNavigation.classList.toggle('is-compact', currentScrollY > 24);
+
+    const diff = currentScrollY - lastScrollY;
+
+    if (Math.abs(diff) < scrollDelta) {
+      ticking = false;
+      return;
     }
 
-    previousScrollPosition = currentScrollPosition;
-    scrollUpdateQueued = false;
+    if (currentScrollY <= activationPoint) {
+      showHeader();
+      lastScrollY = currentScrollY;
+      ticking = false;
+      return;
+    }
+
+    if (diff > 0) {
+      hideHeader();
+    } else {
+      showHeader();
+    }
+
+    lastScrollY = currentScrollY;
+    ticking = false;
   };
 
   window.addEventListener('scroll', () => {
-    if (scrollUpdateQueued) return;
-    scrollUpdateQueued = true;
-    window.requestAnimationFrame(updateNavigation);
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(updateHeader);
   }, { passive: true });
 }
 
